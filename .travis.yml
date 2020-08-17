@@ -1,0 +1,15 @@
+sudo: required
+language: generic
+
+#tell travies we need a copy of docker running
+services:
+    - docker
+
+before_install:
+    - docker build -t ranger001/docker-react -f Dockerfile.dev .
+#build our image using dockerfile.dev (since we want to run the test suite first)
+
+#tell travis how to run our test suite
+script:
+    - docker run -e CI=true ranger001/docker-react npm run test
+#tell travis how to deploy our code to AWS
